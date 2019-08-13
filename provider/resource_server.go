@@ -212,9 +212,10 @@ func resourceServerCreate(d *schema.ResourceData, m interface{}) error {
 	if err != nil {
 		return err
 	}
-	defer d.SetId(hostname)
-
-	return resourceServerRead(d, m)
+	d.SetId(hostname)
+	d.Set("hostname", hostname)
+	return nil
+	//return resourceServerRead(d, m)
 }
 
 func resourceServerRead(d *schema.ResourceData, m interface{}) error {
@@ -222,18 +223,16 @@ func resourceServerRead(d *schema.ResourceData, m interface{}) error {
 	email := m.(*Client).Email
 	token := m.(*Client).Token
 	hostname := d.Get("hostname").(string)
-	//config := d.Get("config").(string)
 	isExist, err := IsServerOrOrderExists(url, email, token, hostname)
 	if err != nil {
 		return err
 	}
 
 	if isExist {
-		defer d.Set("hostname", hostname)
-		//d.Set("config", config)
+		d.Set("hostname", hostname)
 		return nil
 	} else {
-		defer d.SetId("")
+		d.SetId("")
 		return errors.New(fmt.Sprintf("Hostname: %s not found.", hostname))
 	}
 }
@@ -266,7 +265,6 @@ func resourceServerDelete(d *schema.ResourceData, m interface{}) error {
 
 func resourceServerUpdate(d *schema.ResourceData, m interface{}) error {
 	d.Partial(true)
-	//if d.HasChange("hostname") || d.HasChange("config") {
 	if d.HasChange("hostname") {
 		url := m.(*Client).Url
 		email := m.(*Client).Email
@@ -304,11 +302,10 @@ func resourceServerUpdate(d *schema.ResourceData, m interface{}) error {
 		if err != nil {
 			return err
 		}
-		defer d.SetId(hostname)
-		defer d.SetPartial("hostname")
-		//d.SetPartial("config")
+		d.SetId(hostname)
+		d.SetPartial("hostname")
 	}
-	defer d.Partial(false)
+	d.Partial(false)
 
 	return resourceServerRead(d, m)
 }

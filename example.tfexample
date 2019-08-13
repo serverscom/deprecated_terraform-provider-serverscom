@@ -4,35 +4,50 @@ provider "serverscom" {
   password = "PASSWORD"
 }
 
-resource "serverscom_server" "my-server-1" {
-  hostname = "my-server-1"
-  config   = "{\"data\":{\"hosts\":[{\"hostname\":\"%s\",\"private_pool_id\":null,\"private_cidr\":null}],\"location_id\":23,\"server_model_id\":2071,\"ram_size\":64,\"os\":{\"name\":\"Ubuntu\",\"arch\":\"x86_64\",\"version\":\"18.04-server\"},\"hdds\":{\"0\":{\"interface\":3,\"physical_size\":0,\"hdd\":{\"id\":3,\"name\":\"480 GB SSD\",\"size\":480}},\"1\":{\"interface\":3,\"physical_size\":0,\"hdd\":{\"id\":3,\"name\":\"480 GB SSD\",\"size\":480}},\"2\":{\"interface\":3,\"physical_size\":0,\"hdd\":null},\"3\":{\"interface\":3,\"physical_size\":0,\"hdd\":null}},\"disks\":[{\"disks\":[0,1],\"partitions\":[{\"target\":\"/boot\",\"fs\":\"ext4\",\"size\":500,\"fill\":false},{\"target\":\"swap\",\"fs\":\"swap\",\"size\":2048,\"fill\":false},{\"target\":\"/\",\"fs\":\"ext4\",\"size\":477452,\"fill\":true}],\"raid\":1}],\"uplinks\":{\"public\":1573,\"private\":1574},\"public_bandwidth\":1220,\"ips\":0,\"ipv6\":true},\"quantity\":1}"
+resource "serverscom_server" "my-server-4" {
+  hostname = "my-server-4"
+  config   = var.server_config
 }
 
-resource "serverscom_server" "my-server-2" {
-  hostname = "my-server-2"
-  config   = "{\"data\":{\"hosts\":[{\"hostname\":\"%s\",\"private_pool_id\":null,\"private_cidr\":null}],\"location_id\":23,\"server_model_id\":2071,\"ram_size\":64,\"os\":{\"name\":\"Ubuntu\",\"arch\":\"x86_64\",\"version\":\"18.04-server\"},\"hdds\":{\"0\":{\"interface\":3,\"physical_size\":0,\"hdd\":{\"id\":3,\"name\":\"480 GB SSD\",\"size\":480}},\"1\":{\"interface\":3,\"physical_size\":0,\"hdd\":{\"id\":3,\"name\":\"480 GB SSD\",\"size\":480}},\"2\":{\"interface\":3,\"physical_size\":0,\"hdd\":null},\"3\":{\"interface\":3,\"physical_size\":0,\"hdd\":null}},\"disks\":[{\"disks\":[0,1],\"partitions\":[{\"target\":\"/boot\",\"fs\":\"ext4\",\"size\":500,\"fill\":false},{\"target\":\"swap\",\"fs\":\"swap\",\"size\":2048,\"fill\":false},{\"target\":\"/\",\"fs\":\"ext4\",\"size\":477452,\"fill\":true}],\"raid\":1}],\"uplinks\":{\"public\":1573,\"private\":1574},\"public_bandwidth\":1220,\"ips\":0,\"ipv6\":true},\"quantity\":1}"
+resource "serverscom_server" "my-server-5" {
+  hostname = "my-server-5"
+  config   = var.server_config
+}
+
+resource "serverscom_server" "my-server-6" {
+  hostname = "my-server-6"
+  config   = var.server_config
+}
+
+resource "serverscom_server" "my-server-7" {
+  hostname = "my-server-7"
+  config   = var.server_config
 }
 
 resource "serverscom_server" "my-server-3" {
   hostname = "my-server-3"
-  config   = "{\"data\":{\"hosts\":[{\"hostname\":\"%s\",\"private_pool_id\":null,\"private_cidr\":null}],\"location_id\":23,\"server_model_id\":2071,\"ram_size\":64,\"os\":{\"name\":\"Ubuntu\",\"arch\":\"x86_64\",\"version\":\"18.04-server\"},\"hdds\":{\"0\":{\"interface\":3,\"physical_size\":0,\"hdd\":{\"id\":3,\"name\":\"480 GB SSD\",\"size\":480}},\"1\":{\"interface\":3,\"physical_size\":0,\"hdd\":{\"id\":3,\"name\":\"480 GB SSD\",\"size\":480}},\"2\":{\"interface\":3,\"physical_size\":0,\"hdd\":null},\"3\":{\"interface\":3,\"physical_size\":0,\"hdd\":null}},\"disks\":[{\"disks\":[0,1],\"partitions\":[{\"target\":\"/boot\",\"fs\":\"ext4\",\"size\":500,\"fill\":false},{\"target\":\"swap\",\"fs\":\"swap\",\"size\":2048,\"fill\":false},{\"target\":\"/\",\"fs\":\"ext4\",\"size\":477452,\"fill\":true}],\"raid\":1}],\"uplinks\":{\"public\":1573,\"private\":1574},\"public_bandwidth\":1220,\"ips\":0,\"ipv6\":true},\"quantity\":1}"
+  config   = var.server_config
 }
 
-resource "serverscom_ptr" "my-ptr-1" {
-  hostname = "my-server-1"
-  ptr      = "ptr-server-1.com"
+resource "serverscom_ptr" "my-ptr-2" {
+  hostname = "my-server-3"
+  ptr      = "ptr-daitest-1.com"
 }
 
-resource "serverscom_l2" "my-l2" {
+resource "serverscom_l2" "my-l22" {
   hostnames {
-    name = "my-server-1"
+    name = "my-server-6"
     mode = "native"
   }
   hostnames {
-    name = "my-server-2"
+    name = "my-server-7"
     mode = "native"
   }
-  name = "test-terraform-l2"
-  type = "public"
+  name = "test-terraform-l23"
+  type = "private"
+}
+
+variable "server_config" {
+  type    = string
+  default = "{\"data\":{\"hosts\":[{\"hostname\":\"%s\",\"private_pool_id\":null,\"private_cidr\":null}],\"location_id\":23,\"server_model_id\":2071,\"ram_size\":64,\"os\":{\"name\":\"Ubuntu\",\"arch\":\"x86_64\",\"version\":\"18.04-server\"},\"hdds\":{\"0\":{\"interface\":3,\"physical_size\":0,\"hdd\":{\"id\":3,\"name\":\"480 GB SSD\",\"size\":480}},\"1\":{\"interface\":3,\"physical_size\":0,\"hdd\":{\"id\":3,\"name\":\"480 GB SSD\",\"size\":480}},\"2\":{\"interface\":3,\"physical_size\":0,\"hdd\":null},\"3\":{\"interface\":3,\"physical_size\":0,\"hdd\":null}},\"disks\":[{\"disks\":[0,1],\"partitions\":[{\"target\":\"/boot\",\"fs\":\"ext4\",\"size\":500,\"fill\":false},{\"target\":\"swap\",\"fs\":\"swap\",\"size\":2048,\"fill\":false},{\"target\":\"/\",\"fs\":\"ext4\",\"size\":477452,\"fill\":true}],\"raid\":1}],\"uplinks\":{\"public\":1573,\"private\":1574},\"public_bandwidth\":1220,\"ips\":0,\"ipv6\":true},\"quantity\":1}"
 }
