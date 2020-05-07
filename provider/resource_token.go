@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
+	neturl "net/url"
 	"strings"
 )
 
@@ -14,7 +15,10 @@ type Token struct {
 }
 
 func GetToken(url, email, pwd string) (string, error) {
-	body := strings.NewReader(fmt.Sprintf(`email=%s&pwd=%s`, email, pwd))
+	form := neturl.Values{}
+	form.Add("email", email)
+	form.Add("pwd", pwd)
+	body := strings.NewReader(form.Encode())
 	req, err := http.NewRequest("POST", fmt.Sprintf(`%s/p/login_token`, url), body)
 	if err != nil {
 		return "", err
